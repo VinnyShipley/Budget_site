@@ -9,7 +9,7 @@
         <nav>
             <ul>
                 <li><a href="{% url 'user_list' %}">User List</a></li>
-                <!-- Add other navigation links here -->
+                <!-- Add more navigation links if needed -->
             </ul>
         </nav>
     </header>
@@ -17,7 +17,7 @@
         {% block content %}{% endblock %}
     </main>
     <footer>
-        &copy; 2023 My Website
+        &copy; {{ year }} My Website
     </footer>
 </body>
 </html>
