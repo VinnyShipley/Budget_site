@@ -4,9 +4,9 @@
 {% block content %}
 <h2>User List</h2>
 <p>Block content</p>
-{% comment %} <ul>
+<ul>
     {% for account in accounts %}
     <li><a href="{% url 'user_detail' account.pk %}">{{ account.name }}</a></li>
     {% endfor %}
-</ul> {% endcomment %}
+</ul>
 {% endblock %}
