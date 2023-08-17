@@ -7,7 +7,7 @@ class FinanceAccount(models.Model):
   username = models.CharField(max_length=50)
   incomes = ArrayField(models.IntegerField(), default=None, blank=True, null=True)
   new_expenses = ArrayField(models.IntegerField(), default=None, blank=True, null=True)
-  saved_expense_value = models.IntegerField
+  saved_expense_value = models.IntegerField(default=None)
   
   def __str__(self):
     return self.username
