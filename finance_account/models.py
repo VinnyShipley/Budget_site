@@ -4,10 +4,10 @@ from django.contrib.postgres.fields import ArrayField
 
 class FinanceAccount(models.Model):
   owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-  username = models.CharField(max_length=50)
+  income_names = ArrayField(models.CharField(max_length=100), default=None, blank=True, null=True)
   incomes = ArrayField(models.IntegerField(), default=None, blank=True, null=True)
   new_expenses = ArrayField(models.IntegerField(), default=None, blank=True, null=True)
   saved_expense_value = models.IntegerField(default=None)
   
   def __str__(self):
-    return self.username
+    return self.owner.username

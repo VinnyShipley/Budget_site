@@ -3,6 +3,7 @@ from .models import FinanceAccount
 from .forms import UserInfoForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+import json
 
 class UserListView(ListView):
     template_name = 'user_list.html'
@@ -17,8 +18,15 @@ class UserDetail(DetailView):
 def new(request):
     if request.method == 'POST':
         form = UserInfoForm(request.POST)
-        form.save
-        return redirect('/')
+        if form.is_valid():
+            # Serialize the list into a string
+            income_names = json.dumps(form.cleaned_data['income_names'])
+            
+            finance_account = form.save(commit=False)
+            finance_account.income_names = income_names
+            finance_account.save()
+            
+            return redirect('success')  # Redirect to a success page or another view
     else:
         form = UserInfoForm()
     return render(request, 'form.html', {'form': form})
