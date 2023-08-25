@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from .models import FinanceAccount
-from .forms import UserInfoForm
+from .forms import InputForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import json
@@ -38,3 +38,10 @@ def new(request):
     else:
         # Handle GET request
         return render(request, 'your_template.html', context)
+    
+    
+def user_input(request):
+    result = None
+    
+    if request.method == 'POST':
+        form = InputForm

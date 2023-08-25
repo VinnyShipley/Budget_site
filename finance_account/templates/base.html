@@ -6,15 +6,18 @@
 <body>
     <header>
         <h1>Budget Splitter</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'user_list' %}">User List</a></li>
-                
-            </ul>
-        </nav>
     </header>
     <main>
-        {% block content %}{% endblock %}
+        <form method='post'>
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type='submit'>Submit</button>
+        </form>
+
+        {% if result %}
+        <h2>Results:</h2>
+        <p>{{ result }}</p>
+        {% endif %}
     </main>
 </body>
 </html>
