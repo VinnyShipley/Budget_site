@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% comment %} {% extends 'base.html' %} {% block content %}
 <header>
 	<h1>Budget Splitter - Input Form</h1>
 </header>
@@ -31,4 +31,42 @@
 		});
 	});
 </script>
+{% endblock %} {% endcomment %}
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <form id="input-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="button" id="add-fields">Add Incomes and Expenses</button>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('#input-form');
+      const addFieldsButton = document.querySelector('#add-fields');
+
+      addFieldsButton.addEventListener('click', function() {
+        const numIncomes = parseInt(document.querySelector('#id_num_incomes').value);
+
+        for (let i = 0; i < numIncomes; i++) {
+          const incomeInput = document.createElement('input');
+          incomeInput.type = 'text';
+          incomeInput.name = `incomes_${i}`;
+          incomeInput.placeholder = 'Income ' + (i + 1);
+          
+          const expensesInput = document.createElement('input');
+          expensesInput.type = 'text';
+          expensesInput.name = `expenses_${i}`;
+          expensesInput.placeholder = 'Expenses ' + (i + 1);
+
+          form.insertBefore(incomeInput, addFieldsButton);
+          form.insertBefore(expensesInput, addFieldsButton);
+        }
+      });
+    });
+  </script>
 {% endblock %}
+
