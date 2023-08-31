@@ -3,9 +3,8 @@ from .models import FinanceAccount
 from .forms import InputForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-import json
 from django.contrib.auth import get_user_model
-from .budget_splitter import budget_splitter, income_collector, expense_collector
+from .budget_splitter import budget_splitter
 
 class UserListView(ListView):
     template_name = 'user_list.html'
@@ -50,26 +49,23 @@ def input_form(request):
     if request.method == 'POST':
         form = InputForm(request.POST)
         if form.is_valid():
+            num_incomes = int(form.cleaned_data['num_incomes'])
             names = form.cleaned_data['names'].split(', ')
-            single_values = form.cleaned_data['single_values'].split(', ')
-            multi_values = form.cleaned_data['multi_values'].split('\n')
-            
+            single_values = form.cleaned_data['incomes'].split(', ')
+
+            multi_values = []
+            for i in range(num_incomes):
+                expense_key = f'expenses_{i + 1}'
+                multi_values.append(form.cleaned_data.get(expense_key, ''))
+
             # Process the form data and call budget_splitter function
             incomes = [int(value) for value in single_values]
-            expenses = [list(map(int, values.split(', '))) for values in multi_values]
-            budget_splitter(incomes, expenses)
-            
-            results = []
-            for name, single_value, multi_value in zip(names, single_values, multi_values):
-                single_value = int(single_value)
-                multi_value = [int(val) for val in multi_value.split(', ')]
-                result = {
-                    'name': name,
-                    'single_value': single_value,
-                    'multi_values': multi_value,
-                }
-                results.append(result)
-            
+            expenses = [
+                list(map(int, values.split(', '))) if values else []
+                for values in multi_values
+            ]
+            results = budget_splitter(names, incomes, expenses)
+
             context = {
                 'form': form,
                 'results': results,
@@ -81,4 +77,5 @@ def input_form(request):
     context = {
         'form': form,
     }
-    return render(request, 'input_form.html', context)
+    return render(request, 'base.html', context)
+

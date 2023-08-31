@@ -2,25 +2,47 @@
 <html>
 <head>
     <title>{% block title %}My Website{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_num_incomes').on('change', function() {
+                var numIncomes = parseInt($(this).val());
+                var expensesContainer = $('#expenses-container');
+                expensesContainer.empty();
+
+                for (var i = 1; i <= numIncomes; i++) {
+                    var inputHTML = `
+                        <label for="id_expenses_${i}">Expenses for Income ${i}</label>
+                        <input type="text" name="expenses_${i}" id="id_expenses_${i}">
+                        <br>
+                    `;
+                    expensesContainer.append(inputHTML);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
         <h1>Budget Splitter</h1>
     </header>
     <main>
-        <form method='post'>
+        <form method="post">
             {% csrf_token %}
-            {{form.as_p}}
-            <button type='submit'>Submit</button>
+            {{ form.as_p }}
+            <div id="expenses-container"></div>
+            <button type="submit">Submit</button>
         </form>
 
-        {% if result %}
+        {% if results %}
         <h2>Results:</h2>
         <ul>
             {% for result in results %}
-            <li>Name: {{ result.name }}</li>
-            <li>Single Value: {{ result.single_value }}</li>
-            <li>Multi Values: {{ result.multi_values }}</li>
+            <li>
+                Name: {{ result.name }}<br>
+                Income: {{ result.income }}<br>
+                Expenses: {{ result.expenses }}
+            </li>
             {% endfor %}
         </ul>
         {% endif %}
