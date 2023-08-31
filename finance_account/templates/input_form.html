@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Input Form{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Budget Splitter - Input Form</h1>
+    </header>
+    <main>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+</body>
+</html>

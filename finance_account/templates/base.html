@@ -16,7 +16,13 @@
 
         {% if result %}
         <h2>Results:</h2>
-        <p>{{ result }}</p>
+        <ul>
+            {% for result in results %}
+            <li>Name: {{ result.name }}</li>
+            <li>Single Value: {{ result.single_value }}</li>
+            <li>Multi Values: {{ result.multi_values }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
     </main>
 </body>

@@ -35,12 +35,15 @@ def new(request):
         )
         finance_account.save()
 
-        # Redirect or render success page here
+        return redirect('user_list')
     else:
-        # Handle GET request
-        return render(request, 'your_template.html', context)
+        form = InputForm()
+        
+    context = {
+        'form': form,
+    }
     
-    
+    return render(request, 'base.html',context)
 
 
 def input_form(request):
@@ -78,4 +81,4 @@ def input_form(request):
     context = {
         'form': form,
     }
-    return render(request, 'base.html', context)
+    return render(request, 'input_form.html', context)
