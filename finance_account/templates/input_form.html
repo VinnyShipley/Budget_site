@@ -1,38 +1,3 @@
-{% comment %} {% extends 'base.html' %} {% block content %}
-<header>
-	<h1>Budget Splitter - Input Form</h1>
-</header>
-<main>
-	<form method="post">
-		{% csrf_token %} {{ form.as_p }}
-		<label for="num_incomes">Number of Incomes:</label>
-		<input type="number" id="num_incomes" name="num_incomes" />
-		<div id="expense_container"></div>
-		<button type="submit">Submit</button>
-	</form>
-</main>
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		const numIncomes = document.getElementById('num_incomes');
-		const expensContainer = document.getElementById('expense_container');
-
-		numIncomesInput.addEventListener('input', function () {
-			const numIncomes = parseInt(numIncomesInput.value);
-			expensContainer.innerHTML = '';
-
-			for (let i = 0; i < numIncomes; i++) {
-				const expensesField = document.createElement('input');
-				expensesField.type = 'text';
-				expensesField.name = 'expenses_${i}';
-				expensesField.placeholder = 'Expenses for Income ${i + 1}';
-				expensContainer.appendChild(expensesField);
-				expensContainer.appendChild(document.createElement('br'));
-			}
-		});
-	});
-</script>
-{% endblock %} {% endcomment %}
-
 {% extends 'base.html' %}
 
 {% block content %}
