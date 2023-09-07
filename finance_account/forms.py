@@ -1,14 +1,6 @@
-# from django import forms
-
-# class InputForm(forms.Form):
-#     names = forms.CharField(label='Enter names (comma-separated)', widget=forms.TextInput(attrs={'placeholder': 'Name1, Name2, Name3'}))
-#     incomes = forms.CharField(label='Enter the incomes for the names (comma-separated)', widget=forms.TextInput(attrs={'placeholder': '1, 2, 3'}))
-#     expenses = forms.CharField(label='Enter the expenses for each incomes (comma-separated)', widget=forms.TextInput(attrs={'placeholder': '4, 5, 6'}))
-
 from django import forms
 
 class InputForm(forms.Form):
-    names = forms.CharField(label='Enter names (comma-separated)', widget=forms.TextInput(attrs={'placeholder': 'Name1, Name2, Name3'}))
     num_incomes = forms.IntegerField(label='Enter the number of incomes')
     
     def __init__(self, *args, **kwargs):
