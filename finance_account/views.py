@@ -68,37 +68,4 @@ def new(request):
     return render(request, 'base.html',context)
 
 
-def input_form(request):
-    if request.method == 'POST':
-        form = InputForm(request.POST)
-        if form.is_valid():
-            num_incomes = int(form.cleaned_data['num_incomes'])
-            names = form.cleaned_data['names'].split(', ')
-            single_values = form.cleaned_data['incomes'].split(', ')
-
-            multi_values = []
-            for i in range(num_incomes):
-                expense_key = f'expenses_{i + 1}'
-                multi_values.append(form.cleaned_data.get(expense_key, ''))
-
-            # Process the form data and call budget_splitter function
-            incomes = [int(value) for value in single_values]
-            expenses = [
-                list(map(int, values.split(', '))) if values else []
-                for values in multi_values
-            ]
-            results = budget_splitter(names, incomes, expenses)
-
-            context = {
-                'form': form,
-                'results': results,
-            }
-            return render(request, 'base.html', context)
-    else:
-        form = InputForm()
-
-    context = {
-        'form': form,
-    }
-    return render(request, 'base.html', context)
 

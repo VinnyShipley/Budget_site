@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Budget Splitter</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#numIncomes').on('input', function() {
@@ -13,15 +14,15 @@
                 for (var i = 1; i <= numIncomes; i++) {
                     var inputHTML = `
                         <div>
-                            <label for="name_${i}">Name for Income ${i}</label>
+                            <label for="name_${i}">Person ${i}'s Name</label>
                             <input type="text" name="name_${i}" id="name_${i}">
                         </div>
                         <div>
-                            <label for="income_${i}">Income for ${i}</label>
+                            <label for="income_${i}">Income for Person ${i}</label>
                             <input type="text" name="income_${i}" id="income_${i}">
                         </div>
                         <div>
-                            <label for="expense_${i}">Expense for ${i}</label>
+                            <label for="expense_${i}">Expenses for Person ${i}</label>
                             <input type="text" name="expense_${i}" id="expense_${i}">
                         </div>
                     `;
@@ -41,9 +42,14 @@
                     };
                     incomesData.push(incomeData);
                 }
-    
+                
+                const csrftoken = Cookies.get('csrftoken');
+
                 // Send the data to the server using AJAX.
                 $.ajax({
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include CSRF token in headers
+                    },
                     type: 'POST',
                     url: '', 
                     data: JSON.stringify({ incomesData: incomesData }), // Convert data to JSON
@@ -51,10 +57,12 @@
                     success: function(response) {
                         // Handle the server's response, if needed
                         console.log(response);
+
                     },
                     error: function(error) {
                         // Handle errors, if any
                         console.error(error);
+                        console.log(incomesData)
                     }
                 });
             });
@@ -73,7 +81,8 @@
         <button type="button" id="submit-button">Submit</button>
     </form>
 
-    <!-- Container to display results -->
     <div id="results-container"></div>
 </body>
 </html>
+
+
