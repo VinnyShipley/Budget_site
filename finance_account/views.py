@@ -44,18 +44,22 @@ def new(request):
         income_names = request.POST.getlist('income_names')  
         incomes = request.POST.getlist('incomes')  
 
-        income_names_str = '{{{}}}'.format(', '.join('"{}"'.format(item) for item in income_names))
-        incomes_str = '{{{}}}'.format(', '.join(str(item) for item in incomes))
+        # Assuming you want to store expenses as well, you need to get them from the form
+        expenses = request.POST.getlist('expenses')
 
-        user = get_user_model().objects.get(username=request.user.username)
+        # Create a list of FinanceAccount objects based on the form data
+        finance_accounts = []
 
-        finance_account = FinanceAccount(
-            owner=user,
-            income_names=income_names_str,
-            incomes=incomes_str,
-            # other fields...
-        )
-        finance_account.save()
+        for name, income, expense in zip(income_names, incomes, expenses):
+            finance_account = FinanceAccount(
+                name=name,
+                income=income,
+                expenses=expense,
+            )
+            finance_accounts.append(finance_account)
+
+        # Bulk insert the finance_account objects into the database
+        FinanceAccount.objects.bulk_create(finance_accounts)
 
         return redirect('user_list')
     else:
@@ -65,7 +69,6 @@ def new(request):
         'form': form,
     }
     
-    return render(request, 'base.html',context)
-
+    return render(request, 'base.html', context)
 
 
