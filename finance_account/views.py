@@ -1,9 +1,7 @@
 from django.views.generic import ListView, DetailView
 from .models import FinanceAccount
 from .forms import InputForm
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
 from .budget_splitter import budget_splitter
 from django.http import JsonResponse
 import json
@@ -18,6 +16,7 @@ class UserDetail(DetailView):
     queryset = FinanceAccount.objects.all()
     context_object_name = 'account'
     
+
 def process_incomes(request):
     if request.method == 'POST':
         # Retrieve the JSON data sent by the client
@@ -38,6 +37,8 @@ def process_incomes(request):
         return JsonResponse({'processedData': processed_data})
 
     return JsonResponse({'error': 'Invalid request method'})
+
+
 
 def new(request):
     if request.method == 'POST':
