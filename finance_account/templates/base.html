@@ -65,7 +65,7 @@
                         // Display the processed data in the results-container
                         var resultsContainer = $('#results-container');
                         resultsContainer.empty();
-                        resultsContainer.html('Processed Data: ');
+                        resultsContainer.html('Results: ');
 
                         // Create a table for the processed data
                         var table = $('<table>').addClass('table table-bordered');
@@ -80,6 +80,7 @@
                         headerRow.append($('<th>').text('Spending Amount'));
                         headerRow.append($('<th>').text('Remaining Income'));
                         headerRow.append($('<th>').text('Individual Spending'));
+                        headerRow.append($('<th>').text('Individual Percentage'));
                         thead.append(headerRow);
 
                         // Loop through the processed data and add rows to the table
@@ -91,6 +92,7 @@
                             row.append($('<td>').text(entry.spending_amount));
                             row.append($('<td>').text(entry.remaining_income));
                             row.append($('<td>').text(entry.individual_spending));
+                            row.append($('<td>').text(entry.personal_percentage.toFixed(2)));
                             tbody.append(row);
                         });
 
@@ -99,7 +101,7 @@
                     },
                     error: function(error) {
                         // Handle errors, if any
-                        console.error(error, 'hello');
+                        console.error(error);
                         console.log(incomesData);
                     }
                 });
