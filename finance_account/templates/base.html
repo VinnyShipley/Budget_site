@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Budget Splitter</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -22,7 +22,7 @@
                             <input type="text" name="income_${i}" id="income_${i}">
                         </div>
                         <div>
-                            <label for="expense_${i}">Expenses for Person ${i}</label>
+                            <label for="expense_${i}">Total Expense for Person ${i}</label>
                             <input type="text" name="expense_${i}" id="expense_${i}">
                         </div>
                     `;
@@ -62,7 +62,37 @@
                         // Display the processed data in the results-container
                         var resultsContainer = $('#results-container');
                         resultsContainer.empty();
-                        resultsContainer.html('Processed Data: ' + JSON.stringify(response.processedData));
+                        resultsContainer.html('Processed Data: ');
+
+                        // Create a table for the processed data
+                        var table = $('<table>').addClass('table table-bordered');
+                        var thead = $('<thead>').appendTo(table);
+                        var tbody = $('<tbody>').appendTo(table);
+
+                        // Add table headers
+                        var headerRow = $('<tr>');
+                        headerRow.append($('<th>').text('Name'));
+                        headerRow.append($('<th>').text('Income'));
+                        headerRow.append($('<th>').text('Expense'));
+                        headerRow.append($('<th>').text('Spending Amount'));
+                        headerRow.append($('<th>').text('Remaining Income'));
+                        headerRow.append($('<th>').text('Individual Spending'));
+                        thead.append(headerRow);
+
+                        // Loop through the processed data and add rows to the table
+                        $.each(response.processedData, function(index, entry) {
+                            var row = $('<tr>');
+                            row.append($('<td>').text(entry.name));
+                            row.append($('<td>').text(entry.income));
+                            row.append($('<td>').text(entry.expense));
+                            row.append($('<td>').text(entry.spending_amount));
+                            row.append($('<td>').text(entry.remaining_income));
+                            row.append($('<td>').text(entry.individual_spending));
+                            tbody.append(row);
+                        });
+
+                        // Append the table to the results-container
+                        resultsContainer.append(table);
                     },
                     error: function(error) {
                         // Handle errors, if any
@@ -90,5 +120,3 @@
     <div id="results-container"></div>
 </body>
 </html>
-
-
