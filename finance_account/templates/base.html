@@ -77,9 +77,9 @@
                         headerRow.append($('<th>').text('Name'));
                         headerRow.append($('<th>').text('Income'));
                         headerRow.append($('<th>').text('Expense'));
-                        headerRow.append($('<th>').text('Spending Amount'));
+
                         headerRow.append($('<th>').text('Remaining Income'));
-                        headerRow.append($('<th>').text('Individual Spending'));
+
                         headerRow.append($('<th>').text('Individual Percentage'));
                         thead.append(headerRow);
 
@@ -89,9 +89,9 @@
                             row.append($('<td>').text(entry.name));
                             row.append($('<td>').text(entry.income));
                             row.append($('<td>').text(entry.expense));
-                            row.append($('<td>').text(entry.spending_amount));
+
                             row.append($('<td>').text(entry.remaining_income));
-                            row.append($('<td>').text(entry.individual_spending));
+
                             row.append($('<td>').text(entry.personal_percentage.toFixed(2)));
                             tbody.append(row);
                         });
