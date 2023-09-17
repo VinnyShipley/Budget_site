@@ -19,6 +19,9 @@ def budget_splitter(names, incomes, expenses):
             'remaining_income': remaining_income,
             'individual_spending': individual_spending,
         })
+    print("Intermediate Results:")
+    for result in results:
+        print(result)
 
     return results
 

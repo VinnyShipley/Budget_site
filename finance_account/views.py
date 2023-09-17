@@ -21,6 +21,8 @@ def process_incomes(request):
     if request.method == 'POST':
         # Retrieve the JSON data sent by the client
         data = json.loads(request.body.decode('utf-8'))
+        print("Request Method:", request.method)
+        print("Request Data:", request.body)
 
         # Access the incomesData array
         incomes_data = data.get('incomesData', [])

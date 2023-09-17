@@ -52,12 +52,12 @@
                         xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include CSRF token in headers
                     },
                     type: 'POST',
-                    url: '',  // This URL points to the same page
+                    url: '/process_incomes/',
                     data: JSON.stringify({ incomesData: incomesData }), // Convert data to JSON
                     contentType: 'application/json',
                     success: function(response) {
                         // Handle the server's response, if needed
-                        console.log(response); 
+                        console.log('Response: ',response); 
                 
                         // Display the processed data in the results-container
                         var resultsContainer = $('#results-container');
