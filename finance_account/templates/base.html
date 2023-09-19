@@ -71,7 +71,7 @@
 
                         // Create a table for the processed data
                         var table = $('<table>').addClass('table table-bordered');
-                        var thead = $('<thead>').appendTo(table);
+                        var thead = $('<thead>').addClass('thead-dark').appendTo(table);
                         var tbody = $('<tbody>').appendTo(table);
 
                         // Add table headers
@@ -115,13 +115,15 @@
 <body>
     <h1>Budget Splitter</h1>
     <form method="post" action="{% url 'process_incomes' %}">
+        <div class="bg-danger">
         {% csrf_token %}
-        <label for="numIncomes">Enter Number of Incomes:</label>
+        <label class='bg-success' for="numIncomes">Enter Number of Incomes:</label>
         <input type="number" id="numIncomes" name="numIncomes" min="1">
         <br>
         <div id="expenses-container"></div>
         <br>
         <button type="button" id="submit-button">Submit</button>
+        </div>
     </form>
 
     <div id="results-container"></div>
